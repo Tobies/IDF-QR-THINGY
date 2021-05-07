@@ -7,3 +7,9 @@ which the soldiers can scan using their phones, the QR Code should redirect the 
 
 The site calculates the best route for the user (sorted by shelf number, meaning the user can walk in one circle instead of wandering back and fourth) and gives them
 info about the product they need to supply.
+
+
+Credits:
+ - Roei Oanunu - Main developer and pioneer.
+ - Rishon Jaffe - Helped creating the QR Generator.
+ - Raffael Herrmann - For creating "QRCoder" a free open source QR Generator which was used in order to create this project.
