@@ -147,7 +147,7 @@ function setup() {
         document.getElementById("INPUT-Calc-3").onchange = calcChanged;
         document.getElementById("BTN-ExitSummary").onclick = exitSummaryClick;
     } else {
-        window.location.replace("https://tobies.github.io/IDF-QR-THINGY/");
+        window.location.replace("https://tobies.github.io/IDF-QR-THINGY/404");
     }
 }
 
@@ -158,7 +158,7 @@ function updateUI(index) {
         document.getElementById("LBL-ShelfNum").innerText = "מדף " + sortedItems[index].Shelf;
         document.getElementById("LBL-NeededQuantity").innerText = "/ " + sortedItems[index].WantedQuantity;
         document.getElementById("INPUT-Quantity").value = sortedItems[index].TrueQuantity;
-        document.getElementById("INPUT-Calc-3").value = sortedItems[index].WantedQuantity;
+        document.getElementById("INPUT-Calc-4").value = sortedItems[index].WantedQuantity;
         calcChanged();
 
     }
