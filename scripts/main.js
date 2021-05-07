@@ -23,12 +23,27 @@ function getProductData(SerialID) {
 }
 
 function compareProducts(a, b) {
+
+    var bValue =-999;
+
+    try {
+        aValue = parseInt(a.Shelf);
+    } catch {
+        aValue =999;
+    }
+
+    try {
+        bValue = parseInt(b.Shelf);
+    } catch {
+        bValue =999;
+    }
+
     if (a == null) {
         return -1;
     }
-    if (a.Shelf > b.Shelf) {
+    if (aValue > bValue) {
         return 1;
-    } else if (a.Shelf < b.Shelf) {
+    } else if (aValue < bValue) {
         return -1;
     } else {
         return 0;
@@ -115,7 +130,7 @@ function setup() {
         for (var i = 0; i < parsedData.length; i++) {
             var info = parsedData[i].split("$");
             var productData = getProductData(info[1]);
-            items.push({ID:productData.ID, WantedQuantity:info[0], TrueQuantity:0, Shelf:parseInt(productData.Shelf), Name:productData.Name});
+            items.push({ID:productData.ID, WantedQuantity:info[0], TrueQuantity:0, Shelf:productData.Shelf, Name:productData.Name});
         }
 
         sortedItems = Array.from(items);
@@ -131,6 +146,8 @@ function setup() {
         document.getElementById("INPUT-Calc-4").onchange = calcChanged;
         document.getElementById("INPUT-Calc-3").onchange = calcChanged;
         document.getElementById("BTN-ExitSummary").onclick = exitSummaryClick;
+    } else {
+        window.location.replace("https://tobies.github.io/IDF-QR-THINGY/");
     }
 }
 
