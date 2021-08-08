@@ -49,11 +49,16 @@ function compareProducts(a, b) {
         return 0;
     }
 }
-
+function NeededQuantityClick() {
+    document.getElementById("INPUT-Quantity").value = sortedItems[currentItem].WantedQuantity;
+    sortedItems[currentItem].TrueQuantity = sortedItems[currentItem].WantedQuantity;
+}
 function nextButtonClick() {
     if (currentItem + 1 < sortedItems.length) {
         currentItem += 1;
         updateUI(currentItem);
+    } else {
+        summaryClick()
     }
 }
 
@@ -146,6 +151,7 @@ function setup() {
         document.getElementById("INPUT-Calc-4").onchange = calcChanged;
         document.getElementById("INPUT-Calc-3").onchange = calcChanged;
         document.getElementById("BTN-ExitSummary").onclick = exitSummaryClick;
+        document.getElementById("LBL-NeededQuantity").onclick = NeededQuantityClick;
     } else {
         window.location.replace("https://tobies.github.io/IDF-QR-THINGY/404");
     }
