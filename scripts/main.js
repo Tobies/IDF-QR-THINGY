@@ -15,28 +15,17 @@ function getProductData(SerialID) {
     }
     SerialID = "" + SerialID;
     for (var i = 0; i < csv.length-1; i++) {
-        if (csv[i][2].includes(SerialID)) {
-            return {ID:csv[i][2], Shelf:csv[i][1], Name:csv[i][0]}
+        if (csv[i][0].includes(SerialID)) {
+            return {ID:csv[i][0], Name:csv[i][1], Units:csv[i][2], Shelf:csv[i][3], Area:csv[i][4]}
         }
     }
-    return {ID:SerialID, Shelf:"•", Name:"פריט לא ידוע"}
+    return {ID:SerialID, Shelf:"•", Name:"פריט לא ידוע", Units:"יח", Area:12}
 }
 
 function compareProducts(a, b) {
 
-    var bValue =-999;
-
-    try {
-        aValue = parseInt(a.Shelf);
-    } catch {
-        aValue =999;
-    }
-
-    try {
-        bValue = parseInt(b.Shelf);
-    } catch {
-        bValue =999;
-    }
+    aValue = rateProduct(a)
+    bValue = rateProduct(b)
 
     if (a == null) {
         return -1;
@@ -49,6 +38,29 @@ function compareProducts(a, b) {
         return 0;
     }
 }
+
+function rateProduct(a) {
+    try {
+        aShelf = parseInt(a.Shelf)
+    } catch {
+        aShelf = 0
+    }
+    if (isNaN(aShelf)) {
+        aShelf = 0
+    }
+
+    try {
+        aArea = parseInt(a.Area)
+    } catch {
+        aArea = 12
+    }
+    if (isNaN(aArea)) {
+        aArea = 12
+    }
+    console.log(aShelf, aArea)
+    return aShelf + (aArea * 1000)
+}
+
 function NeededQuantityClick() {
     document.getElementById("INPUT-Quantity").value = sortedItems[currentItem].WantedQuantity;
     sortedItems[currentItem].TrueQuantity = sortedItems[currentItem].WantedQuantity;
@@ -135,7 +147,7 @@ function setup() {
         for (var i = 0; i < parsedData.length; i++) {
             var info = parsedData[i].split("$");
             var productData = getProductData(info[1]);
-            items.push({ID:productData.ID, WantedQuantity:info[0], TrueQuantity:0, Shelf:productData.Shelf, Name:productData.Name});
+            items.push({ID:productData.ID, WantedQuantity:info[0], TrueQuantity:0, Shelf:productData.Shelf, Name:productData.Name, Units:productData.Units, Area:productData.Area});
         }
 
         sortedItems = Array.from(items);
@@ -157,14 +169,52 @@ function setup() {
     }
 }
 
+function areaName(area) {
+    switch (area) {
+        case "1":
+            return "מדף "
+        case "2":
+            return "מחסן שוטף "
+        case "3":
+            return "מזדרון "
+        case "4":
+            return "מחסן רעלים "
+        case "5":
+            return "משטח "
+        case "6":
+            return "מחסן אחד "
+        case "7":
+            return "חדר ניפוק "
+        case "8":
+            return "מחסן מכשירים "
+        case "9":
+            return "מקרר "
+        case "10":
+            return "סככת חמצן "
+        case "11":
+            return "כספת סמים "
+        default:
+            return "איזור לא ידוע "
+    }
+}
+
 function updateUI(index) {
     if (index >= 0 && index < sortedItems.length) {
         document.getElementById("LBL-SerialID").innerText = sortedItems[index].ID;
         document.getElementById("LBL-ProductName").innerText = sortedItems[index].Name;
-        document.getElementById("LBL-ShelfNum").innerText = "מדף " + sortedItems[index].Shelf;
-        document.getElementById("LBL-NeededQuantity").innerText = "/ " + sortedItems[index].WantedQuantity;
+        document.getElementById("LBL-ShelfNum").innerText = areaName(sortedItems[index].Area) + sortedItems[index].Shelf;
+        document.getElementById("LBL-NeededQuantity").innerText = "/ " + sortedItems[index].Units + " " + sortedItems[index].WantedQuantity;
         document.getElementById("INPUT-Quantity").value = sortedItems[index].TrueQuantity;
         document.getElementById("INPUT-Calc-4").value = sortedItems[index].WantedQuantity;
+        try {
+            if (parseInt(sortedItems[index].Area) >= 7 || sortedItems[index].ID.includes("960100352") || sortedItems[index].ID.includes("960100050")) {
+                document.getElementById("INPUT-Quantity").style.color = "#FF2222"
+            } else {
+                document.getElementById("INPUT-Quantity").style.color = "#33e1ec"
+            }
+        } catch {
+            document.getElementById("INPUT-Quantity").style.color = "#33e1ec"
+        }
         calcChanged();
 
     }
