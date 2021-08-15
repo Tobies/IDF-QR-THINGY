@@ -176,7 +176,7 @@ function areaName(area) {
         case "2":
             return "מחסן שוטף "
         case "3":
-            return "מזדרון "
+            return "מסדרון "
         case "4":
             return "מחסן רעלים "
         case "5":
