@@ -146,6 +146,13 @@ function createCookie() {
 	document.cookie = cookie;
 }
 
+function deleteCookie() {
+	var d = new Date();
+	d.setTime(d.getTime() - 1 * 24 * 60 * 60 * 1000);
+	var cookie = "data=0;secure;expires=" + d.toUTCString();
+	document.cookie = cookie;
+}
+
 function validateCookie() {
 	var cookie = document.cookie;
 	if (cookie.length > 0) {
@@ -167,6 +174,8 @@ function validateCookie() {
 				for (var i = 0; i < items.length; i++) {
 					items[i].TrueQuantity = newItems[i].TrueQuantity;
 				}
+			} else {
+				deleteCookie();
 			}
 		}
 	}
