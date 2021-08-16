@@ -134,6 +134,44 @@ function summaryClick() {
     }
 }
 
+function createCookie() {
+	var cookie = "data=";
+	for (var i = 0; i < items.length;i++) {
+		cookie += items[i].TrueQuantity + "$" + items[i].ID + "&";
+	}
+	cookie = cookie.slice(0, -1);
+	var d = new Date();
+	d.setTime(d.getTime() + 1 * 24 * 60 * 60 * 1000);
+	cookie += ";secure;expires=" + d.toUTCString();
+	document.cookie = cookie;
+}
+
+function validateCookie() {
+	var cookie = document.cookie;
+	if (cookie.length > 0) {
+		cookie = cookie.slice(6, cookie.length);
+		var tempItems = cookie.split("&");
+		var newItems = [];
+		var flag = true;
+		if (tempItems.length == items.length) {
+			for (var i = 0; i < tempItems.length; i++) {
+				var tempItem = tempItems[i].split("$");
+				if (tempItem[1] == items[i].ID) {
+					newItems.push({ID:items[i].ID, TrueQuantity:Number(tempItem[0])});
+				} else {
+					flag = false;
+					break;
+				}
+			}
+			if (flag) {
+				for (var i = 0; i < items.length; i++) {
+					items[i].TrueQuantity = newItems[i].TrueQuantity;
+				}
+			}
+		}
+	}
+}
+
 function setup() {
     var url = window.location.href;
     var startingPoint = url.indexOf("data=") +5;
@@ -149,6 +187,8 @@ function setup() {
             var productData = getProductData(info[1]);
             items.push({ID:productData.ID, WantedQuantity:info[0], TrueQuantity:0, Shelf:productData.Shelf, Name:productData.Name, Units:productData.Units, Area:productData.Area});
         }
+	    
+	validateCookie();
 
         sortedItems = Array.from(items);
         sortedItems = sortedItems.sort(compareProducts);
@@ -216,7 +256,7 @@ function updateUI(index) {
             document.getElementById("INPUT-Quantity").style.color = "#33e1ec"
         }
         calcChanged();
-
+	createCookie();
     }
 }
 setup();
