@@ -137,7 +137,7 @@ function summaryClick() {
 function createCookie() {
 	var cookie = "data=";
 	for (var i = 0; i < items.length;i++) {
-		cookie += items[i].TrueQuantity + "$" + items[i].ID + "&";
+		cookie += Number(items[i].TrueQuantity) + "$" + items[i].ID + "&";
 	}
 	cookie = cookie.slice(0, -1);
 	var d = new Date();
@@ -157,7 +157,7 @@ function validateCookie() {
 			for (var i = 0; i < tempItems.length; i++) {
 				var tempItem = tempItems[i].split("$");
 				if (Number(tempItem[1]) == Number(items[i].ID)) {
-					newItems.push({ID:tempItem[1].ID, TrueQuantity:Number(tempItem[0])});
+					newItems.push({ID:Number(tempItem[1].ID), TrueQuantity:Number(tempItem[0])});
 				} else {
 					flag = false;
 					break;
