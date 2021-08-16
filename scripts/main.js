@@ -156,8 +156,8 @@ function validateCookie() {
 		if (tempItems.length == items.length) {
 			for (var i = 0; i < tempItems.length; i++) {
 				var tempItem = tempItems[i].split("$");
-				if (tempItem[1] == items[i].ID) {
-					newItems.push({ID:items[i].ID, TrueQuantity:Number(tempItem[0])});
+				if (Number(tempItem[1]) == Number(items[i].ID)) {
+					newItems.push({ID:tempItem[i].ID, TrueQuantity:Number(tempItem[0])});
 				} else {
 					flag = false;
 					break;
