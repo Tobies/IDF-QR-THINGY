@@ -205,7 +205,7 @@ function setup() {
         document.getElementById("BTN-ExitSummary").onclick = exitSummaryClick;
         document.getElementById("LBL-NeededQuantity").onclick = NeededQuantityClick;
     } else {
-        window.location.replace("https://tobies.github.io/IDF-QR-THINGY/404");
+        //window.location.replace("https://tobies.github.io/IDF-QR-THINGY/404");
     }
 }
 
