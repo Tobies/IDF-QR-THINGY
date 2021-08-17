@@ -197,7 +197,7 @@ function setup() {
             items.push({ID:productData.ID, WantedQuantity:info[0], TrueQuantity:0, Shelf:productData.Shelf, Name:productData.Name, Units:productData.Units, Area:productData.Area});
         }
 	    
-	//validateCookie();
+	validateCookie();
 
         sortedItems = Array.from(items);
         sortedItems = sortedItems.sort(compareProducts);
