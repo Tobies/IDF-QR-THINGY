@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+    </head>
+    <body>
+    </body>
+    <script>
+        if (location.hash.includes("#data=")) {
+            var data = location.hash.replace("#data=", "")
+            location.href = "https://tobies.github.io/Shotef/scanner/orders-manager/index.html#data=" + data;
+        } else {
+            location.href = "https://tobies.github.io/Shotef"
+        }
+    </script>
+</html>
